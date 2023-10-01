@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.rajit.triviaapp.R
@@ -33,7 +34,7 @@ class SelectGameDifficultyFragment : Fragment() {
 
     private val args: SelectGameDifficultyFragmentArgs by navArgs()
 
-    private val mainViewModel: MainViewModel by lazy { MainViewModel() }
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +42,8 @@ class SelectGameDifficultyFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentSelectGameDifficultyBinding.inflate(inflater, container, false)
+
+        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
 
         binding.gameDifficultyChip.setOnCheckedStateChangeListener { _, checkedIds ->
             val value = when (checkedIds[0]) {
@@ -85,7 +88,7 @@ class SelectGameDifficultyFragment : Fragment() {
                     val isSuccess = mainViewModel.getResponseCode()
 
                     if (isSuccess) {
-                        moveToQuizFragment(mainViewModel.getPlayerName())
+                        moveToQuizFragment(mainViewModel.playerName)
                     }
 
                 }

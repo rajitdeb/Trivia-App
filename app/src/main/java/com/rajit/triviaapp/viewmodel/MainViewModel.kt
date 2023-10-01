@@ -1,5 +1,6 @@
 package com.rajit.triviaapp.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.rajit.triviaapp.data.enum.GameDifficulty
 import com.rajit.triviaapp.data.network.RetrofitInstance
@@ -18,16 +19,15 @@ class MainViewModel: ViewModel() {
 
     /** PLAYER NAME - WelcomeFragment */
 
-    private var playerName: String = ""
+    private var _playerName = ""
+    val playerName get(): String = _playerName
 
-    fun getPlayerName(): String {
-        return playerName
-    }
 
     fun setPlayerName(name: String): Boolean {
         val isValid = Utils.validatePlayerNameEdt(name)
         if(isValid) {
-            playerName = Utils.convertToNormalCase(name)
+            _playerName = Utils.convertToNormalCase(name)
+            Log.d("MainViewModel", "setPlayerName: PlayerName: $_playerName")
             return true
         } else {
             return false
