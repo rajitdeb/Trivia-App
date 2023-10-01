@@ -1,12 +1,14 @@
 package com.rajit.triviaapp.ui.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.rajit.triviaapp.R
 import com.rajit.triviaapp.databinding.FragmentWelcomeBinding
@@ -21,7 +23,7 @@ class WelcomeFragment : Fragment() {
     private var _binding: FragmentWelcomeBinding? = null
     private val binding get(): FragmentWelcomeBinding = _binding!!
 
-    private val mainViewModel: MainViewModel by lazy { MainViewModel() }
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,6 +31,8 @@ class WelcomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentWelcomeBinding.inflate(inflater, container, false)
+
+        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
 
         binding.playerNameEdt.editText?.addTextChangedListener {
             if(it?.trim()?.isNotEmpty() == true) {
@@ -47,6 +51,8 @@ class WelcomeFragment : Fragment() {
                     "Success! Starting Quiz",
                     Toast.LENGTH_SHORT
                 ).show()
+
+                Log.d("WelcomeFragment", "PlayerName: ${mainViewModel.playerName}")
 
                 // Move to Quiz Category Fragment
                 findNavController().navigate(R.id.action_welcomeFragment_to_selectCategoryFragment)

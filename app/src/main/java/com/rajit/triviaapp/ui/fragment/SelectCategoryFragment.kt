@@ -2,10 +2,11 @@ package com.rajit.triviaapp.ui.fragment
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.rajit.triviaapp.data.network.model.AllCategory
@@ -27,7 +28,7 @@ class SelectCategoryFragment : Fragment(), OnClickInterface<TriviaCategory> {
     private var _binding: FragmentSelectCategoryBinding? = null
     private val binding get(): FragmentSelectCategoryBinding = _binding!!
 
-    private val mainViewModel: MainViewModel by lazy { MainViewModel() }
+    private lateinit var mainViewModel: MainViewModel
 
     private val mCategoryAdapter: CategoryAdapter by lazy { CategoryAdapter(this) }
 
@@ -37,6 +38,8 @@ class SelectCategoryFragment : Fragment(), OnClickInterface<TriviaCategory> {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentSelectCategoryBinding.inflate(inflater, container, false)
+
+        mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
 
         binding.categoryRv.apply {
             adapter = mCategoryAdapter
