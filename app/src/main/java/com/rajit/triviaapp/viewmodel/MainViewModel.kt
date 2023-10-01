@@ -25,12 +25,12 @@ class MainViewModel: ViewModel() {
 
     fun setPlayerName(name: String): Boolean {
         val isValid = Utils.validatePlayerNameEdt(name)
-        if(isValid) {
+        return if(isValid) {
             _playerName = Utils.convertToNormalCase(name)
             Log.d("MainViewModel", "setPlayerName: PlayerName: $_playerName")
-            return true
+            true
         } else {
-            return false
+            false
         }
     }
 
@@ -41,36 +41,31 @@ class MainViewModel: ViewModel() {
     }
 
     /** SELECT GAME DIFFICULTY LEVEL - SelectGameDifficultyFragment */
-    private var selectedGameDifficulty: GameDifficulty = GameDifficulty.EASY
-
-    fun getSelectedGameDifficultyLevel(): GameDifficulty {
-        return selectedGameDifficulty
-    }
+    private var _selectedGameDifficultyLevel: GameDifficulty = GameDifficulty.EASY
+    val selectedGameDifficultyLevel get(): GameDifficulty = _selectedGameDifficultyLevel
 
     fun setSelectedGameDifficultyLevel(level: GameDifficulty) {
-        selectedGameDifficulty = level
+        _selectedGameDifficultyLevel = level
     }
 
 
     /** GET ALL QUIZZES - QuizFragment */
-    private var isSuccess: Boolean = true
+    private var _isSuccess: Boolean = true
+    val isResponseSuccess get(): Boolean = _isSuccess
 
-    fun getResponseCode(): Boolean {
-        return isSuccess
+    fun setIsResponseSuccess(value: Boolean) {
+        _isSuccess = value
     }
 
-    fun setResponseCode(value: Boolean) {
-        isSuccess = value
-    }
-
-    private var questions: List<Question> = mutableListOf<Question>()
+    private var _questions: List<Question> = mutableListOf<Question>()
+    val questions get(): List<Question> = _questions
 
     fun getQuestions(categoryId: Int, difficulty: String): Observable<AllQuestions> {
         return repository.getQuestions(categoryId, difficulty)
     }
 
     fun setQuestions(list: List<Question>) {
-        questions = list
+        _questions = list
     }
 
 }

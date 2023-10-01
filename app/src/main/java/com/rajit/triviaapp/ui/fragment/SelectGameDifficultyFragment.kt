@@ -57,7 +57,7 @@ class SelectGameDifficultyFragment : Fragment() {
 
             fetchQuestionsFromServer(
                 args.selectedCategory.id,
-                mainViewModel.getSelectedGameDifficultyLevel()
+                mainViewModel.selectedGameDifficultyLevel
             )
         }
 
@@ -85,7 +85,7 @@ class SelectGameDifficultyFragment : Fragment() {
 
                 override fun onComplete() {
                     Log.d(TAG, "getQuestions: onComplete called")
-                    val isSuccess = mainViewModel.getResponseCode()
+                    val isSuccess = mainViewModel.isResponseSuccess
 
                     if (isSuccess) {
                         moveToQuizFragment(mainViewModel.playerName)
@@ -96,10 +96,10 @@ class SelectGameDifficultyFragment : Fragment() {
                 override fun onNext(t: AllQuestions) {
                     Log.d(TAG, "getQuestions: onNext called")
                     if (t.responseCode == 0) {
-                        mainViewModel.setResponseCode(true)
+                        mainViewModel.setIsResponseSuccess(true)
                         mainViewModel.setQuestions(t.questions)
                     } else {
-                        mainViewModel.setResponseCode(false)
+                        mainViewModel.setIsResponseSuccess(false)
                         if (Utils.mapResponseCodeToMessageString(t.responseCode) != "Success") {
                             Toast.makeText(
                                 requireContext(),
