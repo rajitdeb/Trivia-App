@@ -9,6 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.rajit.triviaapp.databinding.FragmentQuizBinding
 import com.rajit.triviaapp.viewmodel.MainViewModel
 
+private const val TAG = "QuizFragment"
+
 /**
  * This is @QuizFragment
  * Here, we will show all the quiz questions, and users can answer them.
