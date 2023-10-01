@@ -9,7 +9,7 @@
         android:id="@+id/welcomeFragment"
         android:name="com.rajit.triviaapp.ui.fragment.WelcomeFragment"
         android:label="fragment_welcome"
-        tools:layout="@layout/fragment_welcome" >
+        tools:layout="@layout/fragment_welcome">
         <action
             android:id="@+id/action_welcomeFragment_to_selectCategoryFragment"
             app:destination="@id/selectCategoryFragment" />
@@ -18,7 +18,7 @@
         android:id="@+id/selectCategoryFragment"
         android:name="com.rajit.triviaapp.ui.fragment.SelectCategoryFragment"
         android:label="fragment_select_category"
-        tools:layout="@layout/fragment_select_category" >
+        tools:layout="@layout/fragment_select_category">
         <action
             android:id="@+id/action_selectCategoryFragment_to_selectGameDifficultyFragment"
             app:destination="@id/selectGameDifficultyFragment" />
@@ -27,9 +27,23 @@
         android:id="@+id/selectGameDifficultyFragment"
         android:name="com.rajit.triviaapp.ui.fragment.SelectGameDifficultyFragment"
         android:label="fragment_select_game_difficulty"
-        tools:layout="@layout/fragment_select_game_difficulty" >
+        tools:layout="@layout/fragment_select_game_difficulty">
         <argument
             android:name="selectedCategory"
             app:argType="com.rajit.triviaapp.data.network.model.TriviaCategory" />
+        <action
+            android:id="@+id/action_selectGameDifficultyFragment_to_quizFragment"
+            app:destination="@id/quizFragment"
+            app:popUpTo="@id/welcomeFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/quizFragment"
+        android:name="com.rajit.triviaapp.ui.fragment.QuizFragment"
+        android:label="fragment_quiz"
+        tools:layout="@layout/fragment_quiz" >
+        <argument
+            android:name="playerName"
+            app:argType="string" />
     </fragment>
 </navigation>

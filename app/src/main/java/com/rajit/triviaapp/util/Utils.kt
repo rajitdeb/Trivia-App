@@ -1,7 +1,7 @@
 package com.rajit.triviaapp.util
 
 import android.util.Log
-import android.widget.Toast
+import com.rajit.triviaapp.data.enum.GameDifficulty
 
 object Utils {
 
@@ -38,6 +38,31 @@ object Utils {
                 newChar = name[0].uppercase()[0],
                 ignoreCase = false
             )
+        }
+    }
+
+    /**
+     * This function converts the GameDifficulty Enum to a Valid String supported by API
+     */
+    fun convertGameDifficultyEnumToString(value: GameDifficulty): String {
+        return when(value) {
+            GameDifficulty.EASY -> "easy"
+            GameDifficulty.MEDIUM -> "medium"
+            GameDifficulty.HARD -> "hard"
+        }
+    }
+
+    /**
+     * This function maps the Response Code that we get from API to a Valid String Message to be shown
+     * to the user.
+     */
+    fun mapResponseCodeToMessageString(responseCode: Int): String {
+        return when(responseCode) {
+            1 -> "No Results Could not return results. The API doesn't have enough questions for your query."
+            2 -> "Invalid Parameter Contains an invalid parameter. Arguments passed in aren't valid."
+            3 -> "Token Not Found Session Token does not exist."
+            4 -> "Token Empty Session Token has returned all possible questions for the specified query. Resetting the Token is necessary."
+            else -> "Success"
         }
     }
 
