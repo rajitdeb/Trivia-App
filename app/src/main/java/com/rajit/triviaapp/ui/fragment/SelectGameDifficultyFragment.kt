@@ -13,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import com.rajit.triviaapp.R
 import com.rajit.triviaapp.data.enum.GameDifficulty
 import com.rajit.triviaapp.data.network.model.AllQuestions
+import com.rajit.triviaapp.data.network.model.FormattedQuestion
 import com.rajit.triviaapp.databinding.FragmentSelectGameDifficultyBinding
 import com.rajit.triviaapp.util.Utils
 import com.rajit.triviaapp.viewmodel.MainViewModel
@@ -95,11 +96,43 @@ class SelectGameDifficultyFragment : Fragment() {
 
                 override fun onNext(t: AllQuestions) {
                     Log.d(TAG, "getQuestions: onNext called")
+
+                    /** If response is successful, execute this block */
                     if (t.responseCode == 0) {
+
                         mainViewModel.setIsResponseSuccess(true)
-                        mainViewModel.setQuestions(t.questions)
+
+                        /** Store the combined options list here */
+                        var listOfOptions: List<FormattedQuestion> = listOf()
+
+                        /** Mapping the Question model to Formatted Question with combined options list */
+                        val question = t.questions.map {
+
+                            /** Combining the incorrectAnswers and correctAnswer in a single list */
+                            val combinedOptions = it.incorrectAnswers.plus(it.correctAnswer)
+
+                            val formattedQuestion = FormattedQuestion(
+                                category = it.category,
+                                correctAnswer = it.correctAnswer,
+                                difficulty = it.difficulty,
+                                question = it.question,
+                                type = it.question,
+                                options = combinedOptions
+                            )
+
+                            formattedQuestion
+                        }
+
+                        /** Setting the new list containing List<FormattedQuestion> */
+                        listOfOptions = question
+
+                        // Saving the new list to mainViewModel
+                        mainViewModel.setQuestions(listOfOptions)
+
                     } else {
+
                         mainViewModel.setIsResponseSuccess(false)
+
                         if (Utils.mapResponseCodeToMessageString(t.responseCode) != "Success") {
                             Toast.makeText(
                                 requireContext(),
