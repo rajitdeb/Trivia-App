@@ -1,5 +1,8 @@
 package com.rajit.triviaapp
 
+import com.rajit.triviaapp.data.network.model.FormattedQuestion
+import com.rajit.triviaapp.data.network.model.Question
+import com.rajit.triviaapp.util.Constants
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -10,8 +13,51 @@ import org.junit.Assert.*
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 class ExampleUnitTest {
+
     @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
     }
+
+
+    /**
+     * This function tests if the Question object can be mapped with Formatted Question
+     * INPUT: [Constants.listOfQuestyions]
+     * OUTPUT: [Constants.listOfFormattedQ]
+     */
+    @Test
+    fun mapping_Question_To_FormattedQuestion() {
+        var listOfOptions: List<FormattedQuestion> = listOf()
+
+        val listOfQuestion: List<Question> = Constants.listOfQuestyions
+
+        val job = listOfQuestion.map {
+
+            val combinedList = it.incorrectAnswers.plus(it.correctAnswer)
+
+            val formattedQuestion = FormattedQuestion(
+                category = it.category,
+                correctAnswer = it.correctAnswer,
+                question = it.question,
+                options = combinedList,
+                difficulty = "medium",
+                type = "multiple"
+            )
+
+            formattedQuestion
+
+        }
+
+        listOfOptions = job
+        val expected = Constants.listOfFormattedQ
+
+        listOfOptions.forEach {
+            var count = 0
+            it.options.forEach { option ->
+                assertEquals(option, expected.options[count++])
+            }
+        }
+
+    }
+
 }

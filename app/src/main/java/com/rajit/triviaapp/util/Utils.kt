@@ -66,4 +66,15 @@ object Utils {
         }
     }
 
+    /**
+     * This function calculated the progress of the quiz
+     * @param currentCount is the current question count
+     * @param totalCount is the total number of questions, which is by default set to 15
+     */
+    fun calculateQuizProgress(currentCount: Int, totalCount: Int = 15): Int {
+        val t: Float = ((currentCount.toFloat()/totalCount.toFloat()) * 100f)
+        Log.d(TAG, "calculateQuizProgress: $t, totalCount: $totalCount, currentCount: $currentCount")
+        return t.toInt()
+    }
+
 }
