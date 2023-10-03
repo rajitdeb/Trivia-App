@@ -44,6 +44,7 @@ dependencies {
 
     def nav_version = "2.6.0"
     def retrofit_version = "2.9.0"
+    def lottie_version = "6.1.0"
 
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
@@ -73,7 +74,9 @@ dependencies {
     implementation 'com.jakewharton.rxbinding4:rxbinding:4.0.0'
 
     // OkHttp3
-    implementation("com.squareup.okhttp3:okhttp:4.11.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
+    implementation "com.squareup.okhttp3:okhttp:4.11.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.1"
 
+    // Lottie
+    implementation "com.airbnb.android:lottie:$lottie_version"
 }
