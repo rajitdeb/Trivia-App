@@ -89,7 +89,7 @@ class SelectGameDifficultyFragment : Fragment() {
                     val isSuccess = mainViewModel.isResponseSuccess
 
                     if (isSuccess) {
-                        moveToQuizFragment(mainViewModel.playerName)
+                        moveToQuizFragment()
                     }
 
                 }
@@ -148,12 +148,9 @@ class SelectGameDifficultyFragment : Fragment() {
 
     /**
      * On Successfully getting all the questions from the Server, move to Quiz Fragment
-     * @param playerName is the playerName we get from the MainViewModel and pass it as parameter
      */
-    private fun moveToQuizFragment(playerName: String) {
-        val directions = SelectGameDifficultyFragmentDirections
-            .actionSelectGameDifficultyFragmentToQuizFragment(playerName)
-        findNavController().navigate(directions)
+    private fun moveToQuizFragment() {
+        findNavController().navigate(R.id.action_selectGameDifficultyFragment_to_quizFragment)
     }
 
     override fun onDestroyView() {
