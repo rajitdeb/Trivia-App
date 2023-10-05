@@ -34,6 +34,9 @@ class WelcomeFragment : Fragment() {
 
         mainViewModel = ViewModelProvider(requireActivity())[MainViewModel::class.java]
 
+        /** Reset currentQuestionCount to 0 (the fragment might have been created after returning from ResultFragment) */
+        mainViewModel.setCurrentQuestionCount(0)
+
         binding.playerNameEdt.editText?.addTextChangedListener {
             if(it?.trim()?.isNotEmpty() == true) {
                 binding.playerNameEdt.error = ""
